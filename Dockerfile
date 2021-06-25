@@ -30,6 +30,8 @@ RUN \
 	# Check that it's installed
 	terraform --version
 
+RUN yes | unminimize
+
 RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 
