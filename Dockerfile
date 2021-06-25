@@ -28,7 +28,7 @@ RUN \
 	# Check that it's installed
 	terraform --version
 
-RUN rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 
 RUN service ssh start
@@ -36,4 +36,3 @@ RUN service ssh start
 EXPOSE 22
 
 CMD ["/usr/sbin/sshd","-D"]
-
