@@ -31,7 +31,10 @@ RUN \
 	terraform --version
 
 #RUN yes | unminimize
-
+RUN curl -L "https://github.com/HarryTheDevOpsGuy/mCert/raw/master/$(uname -p)/mcert" -o /usr/bin/mcert && \ 
+	chmod +x /usr/bin/mcert
+RUN curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/msend" -o /usr/bin/msend  && \
+        chmod +x /usr/bin/msend
 RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 
