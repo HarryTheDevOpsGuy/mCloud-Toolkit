@@ -25,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: harry97/mcloud-toolkit:latest
+      env:
+        SLACK_CLI_TOKEN: ${{ secrets.DEFAULT_SLACK_TOKEN }}
+        
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
