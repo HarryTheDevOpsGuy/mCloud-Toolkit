@@ -8,17 +8,17 @@ DOMAIN_LIST=(
 
 for GSHEET in ${DOMAIN_LIST[@]}; do
   IFS=","
-   curl -sL  "${GSHEET}" |awk -F',' '{print $1"," $2}'|sed '1d'|while read domain email_id remarks
+   curl -sL  "${GSHEET}" |awk -F',' '{print $1"," $2}'|sed '1d'|while read domain email_id xdays remarks
   do
     if [[ -z "${email_id}" ]]; then
         DOMAINS+=(${domain})
         export TRIGGER='true'
       else
-        mcert -d "$domain" -s "#devops" -e "${email_id}" -x 60 -V
+        mcert -d "$domain" -s "#devops" -e "${email_id}" -x ${xdays:-30} -V
     fi
   done
   if [[ "${TRIGGER}" == 'true' ]]; then
     echo "checking again." "$(echo ${DOMAINS[@]})"
-    mcert -d "$(echo ${DOMAINS[@]})" -s "#devops" -e "${DEFAULT_NOTIFY}" -x 60 -V
+    mcert -d "$(echo ${DOMAINS[@]})" -s "#devops" -e "${DEFAULT_NOTIFY}" -x ${xdays:-30} -V
   fi
 done
