@@ -50,7 +50,7 @@ jobs:
       - name: Check Cert expiry
         run: |
           DEFAULT_NOTIFY="harrythedevopsguy@gmail.com"
-          DOMAIN_LIST=( 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScqQ8BfTdgZ8WqGL9e7953dGhr61fDiNlTRs99bqtWRwSuXyDXe8uDnRsYvPddHaPA49cor1eu20bW/pub?gid=0&single=true&output=csv' 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuqhESSxtJv79LWRPju3m_mkdhZFQaQi753p51HAQX5nzi65gCu-AbZkQDeEZGm4GE4Wmeoj6X2lFt/pub?gid=0&single=true&output=csv')
+          declare -a DOMAIN_LIST=( 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScqQ8BfTdgZ8WqGL9e7953dGhr61fDiNlTRs99bqtWRwSuXyDXe8uDnRsYvPddHaPA49cor1eu20bW/pub?gid=0&single=true&output=csv' 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuqhESSxtJv79LWRPju3m_mkdhZFQaQi753p51HAQX5nzi65gCu-AbZkQDeEZGm4GE4Wmeoj6X2lFt/pub?gid=0&single=true&output=csv')
           for GSHEET in ${DOMAIN_LIST[@]}; do
             IFS=","
             curl -sL  "${GSHEET}" |awk -F',' '{print $1"," $2}'|sed '1d'|while read domain email_id remarks
