@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+DEFAULT_NOTIFY="harrythedevopsguy@gmail.com"
+DOMAINS=()
+DOMAIN_LIST=(
+  ['MT_0001']='https://docs.google.com/spreadsheets/d/e/2PACX-1vScqQ8BfTdgZ8WqGL9e7953dGhr61fDiNlTRs99bqtWRwSuXyDXe8uDnRsYvPddHaPA49cor1eu20bW/pub?gid=0&single=true&output=csv'
+  ['MT_0000']='https://docs.google.com/spreadsheets/d/e/2PACX-1vTuqhESSxtJv79LWRPju3m_mkdhZFQaQi753p51HAQX5nzi65gCu-AbZkQDeEZGm4GE4Wmeoj6X2lFt/pub?gid=0&single=true&output=csv'
+  ['MT_2145']='https://docs.google.com/spreadsheets/d/e/2PACX-1vQLM2xA61nLvEkZNeZMAYfJCQm63PI7Jcg-r1thrHFS6W1HXGe4ROH7_q2BiewLnb89E364bD8qJoyl/pub?gid=0&single=true&output=csv'
+  )
+
+for GSHEET in ${DOMAIN_LIST[@]}; do
+  IFS=","
+   curl -sL  "${GSHEET}" |awk -F',' '{print $1"," $2"," $3"," $4"," $5"," $6}'|sed '1d'|while read domain email_id xdays userid slack_chanel remarks
+  do
+
+    if [[ ! -z ${userid} ]]; then
+      eval RAW_SLACK_CLI_TOKEN='$'${userid^^}_SLACK_CLI_TOKEN
+      if [[ ! -z ${RAW_SLACK_CLI_TOKEN} ]]; then
+        export SLACK_CLI_TOKEN=${RAW_SLACK_CLI_TOKEN}
+      fi
+    fi
+
+    if [[ -z "${email_id}" ]]; then
+        DOMAINS+=(${domain})
+        export TRIGGER='true'
+      else
+        echo mcert -d "$domain" -s "${slack_chanel:-#devops}" -e "${email_id}" -x ${xdays:-30} -V
+        mcert -d "$domain" -s "${slack_chanel:-#devops}" -e "${email_id}" -x ${xdays:-30} -V
+        unset xdays slack_chanel email_id domain
+    fi
+  done
+  if [[ "${TRIGGER}" == 'true' ]]; then
+    echo "checking again." "$(echo ${DOMAINS[@]})"
+    mcert -d "$(echo ${DOMAINS[@]})" -s "#devops" -e "${DEFAULT_NOTIFY}" -x ${xdays:-60} -V
+  fi
+done
