@@ -23,6 +23,13 @@ jobs:
   build:  
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        google_sheet: 
+          - 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScqQ8BfTdgZ8WqGL9e7953dGhr61fDiNlTRs99bqtWRwSuXyDXe8uDnRsYvPddHaPA49cor1eu20bW/pub?gid=0&single=true&output=csv'
+          - 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuqhESSxtJv79LWRPju3m_mkdhZFQaQi753p51HAQX5nzi65gCu-AbZkQDeEZGm4GE4Wmeoj6X2lFt/pub?gid=0&single=true&output=csv'
+          
+          
     container:
       image: harry97/mcloud-toolkit:latest
       env:
@@ -40,33 +47,35 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Run a one-line script 
+        run: echo Hello, world! ${{ matrix.google_sheet }}
+        with:
+          gsheet: ${{ matrix.google_sheet }}
       # Runs a single command using the runners shell
-      - name: Check Cert expiry
-        run: mcert -d google.com -x 80 -s '#devops' -e harrythedevopsguy@gmail.com
+      #- name: Check Cert expiry
+      #  run: mcert -d google.com -x 80 -s '#devops' -e harrythedevopsguy@gmail.com
       
       # Check SSL certs 
-      - name: Check Cert expiry
-        run: |
-          DEFAULT_NOTIFY="harrythedevopsguy@gmail.com"
-          declare -a DOMAIN_LIST=( 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScqQ8BfTdgZ8WqGL9e7953dGhr61fDiNlTRs99bqtWRwSuXyDXe8uDnRsYvPddHaPA49cor1eu20bW/pub?gid=0&single=true&output=csv' 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuqhESSxtJv79LWRPju3m_mkdhZFQaQi753p51HAQX5nzi65gCu-AbZkQDeEZGm4GE4Wmeoj6X2lFt/pub?gid=0&single=true&output=csv')
-          for GSHEET in ${DOMAIN_LIST[@]}; do
-            IFS=","
-            curl -sL  "${GSHEET}" |awk -F',' '{print $1"," $2}'|sed '1d'|while read domain email_id remarks
-              do
-                if [[ -z "${email_id}" ]]; then
-                    DOMAINS+=(${domain})
-                    export TRIGGER='true'
-                  else
-                    mcert -d "$domain" -s "#devops" -e "${email_id}" -x 60 -V
-                fi
-              done
-            if [[ "${TRIGGER}" == 'true' ]]; then
-              echo "checking again." "$(echo ${DOMAINS[@]})"
-              mcert -d "$(echo ${DOMAINS[@]})" -s "#devops" -e "${DEFAULT_NOTIFY}" -x 60 -V
-            fi
-          done
+#       - name: Check Cert expiry
+#         run: |
+#           DEFAULT_NOTIFY="harrythedevopsguy@gmail.com"
+#           declare -a DOMAIN_LIST=( 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScqQ8BfTdgZ8WqGL9e7953dGhr61fDiNlTRs99bqtWRwSuXyDXe8uDnRsYvPddHaPA49cor1eu20bW/pub?gid=0&single=true&output=csv' 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuqhESSxtJv79LWRPju3m_mkdhZFQaQi753p51HAQX5nzi65gCu-AbZkQDeEZGm4GE4Wmeoj6X2lFt/pub?gid=0&single=true&output=csv')
+#           for GSHEET in ${DOMAIN_LIST[@]}; do
+#             IFS=","
+#             curl -sL  "${GSHEET}" |awk -F',' '{print $1"," $2}'|sed '1d'|while read domain email_id remarks
+#               do
+#                 if [[ -z "${email_id}" ]]; then
+#                     DOMAINS+=(${domain})
+#                     export TRIGGER='true'
+#                   else
+#                     mcert -d "$domain" -s "#devops" -e "${email_id}" -x 60 -V
+#                 fi
+#               done
+#             if [[ "${TRIGGER}" == 'true' ]]; then
+#               echo "checking again." "$(echo ${DOMAINS[@]})"
+#               mcert -d "$(echo ${DOMAINS[@]})" -s "#devops" -e "${DEFAULT_NOTIFY}" -x 60 -V
+#             fi
+#           done
         
       # Runs a single command using the runners shell
       #- name: Send Email Using mSend
