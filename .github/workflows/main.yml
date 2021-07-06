@@ -20,13 +20,18 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build:  
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     container:
       image: harry97/mcloud-toolkit:latest
       env:
         SLACK_CLI_TOKEN: ${{ secrets.DEFAULT_SLACK_TOKEN }}
+        SENDGRID_API_KEY: ${{ secrets.DEFAULT_SENDGRID_TOKEN }}
+        EMAIL_FROM: mcloudautomation@gmail.com
+        EMAIL_MODE: SENDGRID
+        REPLY_EMAIL_ADDRESS: 'Harry <hrrk881@gmail.com>'
+        
         
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -40,11 +45,17 @@ jobs:
       # Runs a single command using the runners shell
       - name: Check Cert expiry
         run: mcert -d google.com -x 80 -s '#devops'
+        
+      # Runs a single command using the runners shell
+      - name: Send Email Using mSend
+        run: msend -t harrythedevopsguy@gmail.com -s 'github workflow subject' -m 'github workflow' 
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
           echo slack - $SLACK_CLI_TOKEN
+          pwd
+          echo $HOME
           echo Add other actions to build,
           echo test, and deploy your project.
           ls -la 
