@@ -4,6 +4,7 @@ DOMAINS=()
 DOMAIN_LIST=(
       'https://docs.google.com/spreadsheets/d/e/2PACX-1vScqQ8BfTdgZ8WqGL9e7953dGhr61fDiNlTRs99bqtWRwSuXyDXe8uDnRsYvPddHaPA49cor1eu20bW/pub?gid=0&single=true&output=csv'
       'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuqhESSxtJv79LWRPju3m_mkdhZFQaQi753p51HAQX5nzi65gCu-AbZkQDeEZGm4GE4Wmeoj6X2lFt/pub?gid=0&single=true&output=csv'
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vQLM2xA61nLvEkZNeZMAYfJCQm63PI7Jcg-r1thrHFS6W1HXGe4ROH7_q2BiewLnb89E364bD8qJoyl/pub?gid=0&single=true&output=csv'
   )
 
 for GSHEET in ${DOMAIN_LIST[@]}; do
