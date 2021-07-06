@@ -48,9 +48,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world! ${{ matrix.google_sheet }}
-        with:
-          gsheet: ${{ matrix.google_sheet }}
+        run: echo Hello, world!
       # Runs a single command using the runners shell
       #- name: Check Cert expiry
       #  run: mcert -d google.com -x 80 -s '#devops' -e harrythedevopsguy@gmail.com
