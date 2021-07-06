@@ -14,7 +14,9 @@ for GSHEET in ${DOMAIN_LIST[@]}; do
         DOMAINS+=(${domain})
         export TRIGGER='true'
       else
+        echo mcert -d "$domain" -s "#devops" -e "${email_id}" -x ${xdays:-30} -V
         mcert -d "$domain" -s "#devops" -e "${email_id}" -x ${xdays:-30} -V
+        unset xdays
     fi
   done
   if [[ "${TRIGGER}" == 'true' ]]; then
