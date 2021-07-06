@@ -23,13 +23,6 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        google_sheet:
-          - 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScqQ8BfTdgZ8WqGL9e7953dGhr61fDiNlTRs99bqtWRwSuXyDXe8uDnRsYvPddHaPA49cor1eu20bW/pub?gid=0&single=true&output=csv'
-          - 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuqhESSxtJv79LWRPju3m_mkdhZFQaQi753p51HAQX5nzi65gCu-AbZkQDeEZGm4GE4Wmeoj6X2lFt/pub?gid=0&single=true&output=csv'
-
-
     container:
       image: harry97/mcloud-toolkit:latest
       env:
@@ -55,7 +48,9 @@ jobs:
 
       # Check SSL certs
       - name: Check Cert expiry
-        run: ./scripts/mcert-manager
+        run: |
+          chmod +x "${GITHUB_WORKSPACE}/scripts/mcert-manager"
+          ./scripts/mcert-manager
 
       # Runs a single command using the runners shell
       #- name: Send Email Using mSend
