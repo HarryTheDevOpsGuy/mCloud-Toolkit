@@ -39,6 +39,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          repository: HarryTheDevOpsGuy/mConfigs
+          token: ${{ secrets.GH_PERSONAL_TOKEN }}
 
       # Runs a single command using the runners shell
       #- name: Run a one-line script
@@ -50,8 +53,10 @@ jobs:
       # Check SSL certs
       - name: Check Cert expiry
         run: |
-          chmod +x "${GITHUB_WORKSPACE}/scripts/mcert-manager"
-          ./scripts/mcert-manager
+          ls -la 
+          pwd
+          chmod +x "${GITHUB_WORKSPACE}/mcert/mcert-manager.sh"
+          ./mcert/mcert-manager.sh
 
       # Runs a single command using the runners shell
       #- name: Send Email Using mSend
