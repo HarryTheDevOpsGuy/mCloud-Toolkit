@@ -24,11 +24,11 @@ for GSHEET in ${DOMAIN_LIST[@]}; do
       else
         echo mcert -d "$domain" -s "${slack_chanel:-#devops}" -e "${email_id}" -x ${xdays:-30} -V
         mcert -d "$domain" -s "${slack_chanel:-#devops}" -e "${email_id}" -x ${xdays:-30} -V
-        unset xdays
+        unset xdays slack_chanel email_id domain
     fi
   done
   if [[ "${TRIGGER}" == 'true' ]]; then
     echo "checking again." "$(echo ${DOMAINS[@]})"
-    mcert -d "$(echo ${DOMAINS[@]})" -s "#devops" -e "${DEFAULT_NOTIFY}" -x ${xdays:-30} -V
+    mcert -d "$(echo ${DOMAINS[@]})" -s "#devops" -e "${DEFAULT_NOTIFY}" -x ${xdays:-60} -V
   fi
 done
