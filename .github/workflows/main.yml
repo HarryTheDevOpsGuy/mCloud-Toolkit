@@ -30,7 +30,7 @@ jobs:
         SENDGRID_API_KEY: ${{ secrets.DEFAULT_SENDGRID_TOKEN }}
         EMAIL_FROM: mcloudautomation@gmail.com
         EMAIL_MODE: SENDGRID
-        REPLY_EMAIL_ADDRESS: 'Harry <hrrk881@gmail.com>'
+        REPLY_EMAIL_ADDRESS: 'Harry <HarryTheDevOpsGuy@gmail.com>'
         
         
 
@@ -44,11 +44,11 @@ jobs:
         run: echo Hello, world!
       # Runs a single command using the runners shell
       - name: Check Cert expiry
-        run: mcert -d google.com -x 80 -s '#devops'
+        run: mcert -d google.com -x 80 -s '#devops' -e harrythedevopsguy@gmail.com
         
       # Runs a single command using the runners shell
-      - name: Send Email Using mSend
-        run: msend -t harrythedevopsguy@gmail.com -s 'github workflow subject' -m 'github workflow' 
+      #- name: Send Email Using mSend
+      #  run: msend -t harrythedevopsguy@gmail.com -s 'github workflow subject' -m 'github workflow' 
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
