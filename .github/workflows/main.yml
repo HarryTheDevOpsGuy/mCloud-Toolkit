@@ -10,9 +10,9 @@ on:
     
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ dev ]
   pull_request:
-    branches: [ master ]
+    branches: [ dev ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,7 +36,7 @@ jobs:
         run: echo Hello, world!
       # Runs a single command using the runners shell
       - name: Check Cert expiry
-        run: mcert -d google.com -x 55
+        run: mcert -d google.com -x 80 -s '#devops'
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
@@ -44,5 +44,3 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
           ls -la 
-          mcert -h
-          msend -h
