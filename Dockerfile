@@ -36,7 +36,8 @@ RUN curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/m
 	curl -L "https://github.com/HarryTheDevOpsGuy/mCert/raw/master/$(uname -p)/mcert" -o /usr/bin/mcert && \
 	curl -L "https://github.com/HarryTheDevOpsGuy/mWeb24x7/raw/master/$(uname -p)/mweb24x7" -o /usr/bin/mweb24x7 && \
 	curl -L https://github.com/mikefarah/yq/releases/download/v4.2.0/yq_linux_amd64 -o /usr/bin/yq && \
-        chmod +x /usr/bin/msend /usr/bin/mslack /usr/bin/mcert /usr/bin/yq
+	curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/tools/htmlgen" -o /usr/bin/htmlgen && \
+        chmod +x /usr/bin/msend /usr/bin/mslack /usr/bin/mcert /usr/bin/yq /usr/bin/htmlgen
 
 RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
