@@ -6,6 +6,9 @@ ARG PASSWORD=harry
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN apt update && \
+	add-apt-repository --yes --update ppa:ansible/ansible
+	
 RUN apt update && apt install -y openssh-server sudo vim awscli ansible net-tools curl unzip bsdmainutils git gcc software-properties-common shc gettext-base sshpass jq
 
 RUN useradd -rm -d /home/${USERNAME} -s /bin/bash -g root -G sudo -u 1000 ${USERNAME}
