@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:18.04
 ARG TERRAFORM_VERSION=0.15.5
 ARG USERNAME=harry
 ARG PASSWORD=harry
