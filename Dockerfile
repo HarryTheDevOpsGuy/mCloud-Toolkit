@@ -9,6 +9,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt update && \
 	apt-get install -y software-properties-common && \
 	add-apt-repository --yes --update ppa:ansible/ansible
+
 	
 RUN apt update && apt install -y openssh-server sudo vim awscli ansible net-tools curl unzip bsdmainutils git gcc software-properties-common shc gettext-base sshpass jq
 
@@ -22,17 +23,19 @@ RUN echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 ################################
 
 # Download terraform for linux
-RUN wget --progress=dot:mega https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+RUN wget --progress=dot:mega https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+    wget --progress=dot:mega https://github.com/hyperjumptech/monika/releases/download/v1.11.0/monika-v1.11.0-linux-x64.zip 
 
 RUN \
 	# Unzip
-	unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-	# Move to local bin
-	mv terraform /usr/local/bin/ && \
+	unzip -o "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -d "/usr/local/bin" && \
+	unzip -o "monika-v1.11.0-linux-x64.zip" -d "/usr/local/bin" && \
 	# Make it executable
-	chmod +x /usr/local/bin/terraform && \
+	#chmod +x /usr/bin/{terraform,monika} && \
 	# Check that it's installed
-	terraform --version
+	#terraform --version && \
+	rm -rf *.zip
+
 
 #RUN yes | unminimize
 RUN curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/msend" -o /usr/bin/msend  && \
@@ -41,7 +44,7 @@ RUN curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/m
 	curl -L "https://github.com/HarryTheDevOpsGuy/mWeb24x7/raw/master/$(uname -p)/mweb24x7" -o /usr/bin/mweb24x7 && \
 	curl -L https://github.com/mikefarah/yq/releases/download/v4.2.0/yq_linux_amd64 -o /usr/bin/yq && \
 	curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/tools/htmlgen" -o /usr/bin/htmlgen && \
-        chmod +x /usr/bin/msend /usr/bin/mslack /usr/bin/mcert /usr/bin/yq /usr/bin/htmlgen
+    chmod +x /usr/bin/{msend,mslack,mcert,yq,htmlgen,terraform,monika}
 
 RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
