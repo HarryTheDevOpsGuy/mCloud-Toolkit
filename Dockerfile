@@ -29,13 +29,7 @@ RUN wget --progress=dot:mega https://releases.hashicorp.com/terraform/${TERRAFOR
 RUN \
 	# Unzip
 	unzip -o "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -d "/usr/bin" && \
-	unzip -o "monika-v1.11.0-linux-x64.zip" -d "/usr/bin" && \
-	# Make it executable
-	#chmod +x /usr/bin/{terraform,monika} && \
-	# Check that it's installed
-	#terraform --version && \
-	chmod +x /usr/bin/{terraform,monika}
-
+	unzip -o "monika-v1.11.0-linux-x64.zip" -d "/usr/bin" 
 
 #RUN yes | unminimize
 RUN curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/msend" -o /usr/bin/msend  && \
