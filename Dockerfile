@@ -34,6 +34,7 @@ RUN \
 	#chmod +x /usr/bin/{terraform,monika} && \
 	# Check that it's installed
 	#terraform --version && \
+	chmod +x /usr/bin/{terraform,monika}
 
 
 #RUN yes | unminimize
