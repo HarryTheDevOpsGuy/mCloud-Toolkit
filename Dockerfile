@@ -34,7 +34,6 @@ RUN \
 	#chmod +x /usr/bin/{terraform,monika} && \
 	# Check that it's installed
 	#terraform --version && \
-	rm -rf *.zip
 
 
 #RUN yes | unminimize
@@ -46,7 +45,7 @@ RUN curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/m
 	curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/tools/htmlgen" -o /usr/bin/htmlgen && \
     chmod +x /usr/bin/{msend,mslack,mcert,yq,htmlgen,terraform,monika}
 
-RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip *.zip
 
 
 
