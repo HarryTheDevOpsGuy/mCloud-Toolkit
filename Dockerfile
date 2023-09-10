@@ -42,7 +42,7 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt 
 RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip *.zip
 
-RUN python --version && pip freeze 
+RUN pip freeze 
 
 
 RUN service ssh start
