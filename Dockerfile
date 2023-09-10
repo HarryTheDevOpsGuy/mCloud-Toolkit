@@ -38,6 +38,8 @@ RUN curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/m
 	curl -L "https://github.com/HarryTheDevOpsGuy/msend/raw/master/$(uname -p)/tools/htmlgen" -o /usr/bin/htmlgen && \
     chmod +x /usr/bin/msend /usr/bin/mslack /usr/bin/mcert /usr/bin/yq /usr/bin/mweb24x7 /usr/bin/htmlgen /usr/bin/terraform 
 
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt 
 RUN rm -rf /var/lib/apt/lists/*  terraform_${TERRAFORM_VERSION}_linux_amd64.zip *.zip
 
 RUN python --version && pip freeze 
